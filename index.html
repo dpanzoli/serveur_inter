@@ -21,6 +21,7 @@ $(document).ready(function() {
 					$('#sendForm .success').show();
 					$('#sendForm .error').hide();
 				} else {
+					$('#errorSend').text(result.data);
 					$('#sendForm .success').hide();
 					$('#sendForm .error').show();
 				}
@@ -47,6 +48,7 @@ $(document).ready(function() {
 					$('#sendRetrieve .success').show();
 					$('#sendRetrieve .error').hide();
 				} else {
+					$('#errorRetrieve').text(result.data);
 					$('#sendRetrieve .success').hide();
 					$('#sendRetrieve .error').show();
 				}
@@ -75,17 +77,19 @@ $(document).ready(function() {
 	<form id="sendForm" class="ui form">
 		<div class="six wide required field">
 			<label>Identifiant</label>
-			<input type="text" name="id_user" placeholder="Identifiant utilisateur" required value="panzoli">
+			<input type="text" name="id_user" placeholder="Identifiant utilisateur" required value="Cyr13ll32903">
 		</div>
 		<div class="six wide required field">
 			<label>Score</label>
-			<input type="text" name="score" placeholder="Score" required value="1">
+			<input type="text" name="score" placeholder="Score" required value="100">
 		</div>
 		<div class="ui success message">
+			<div class="header">Succès :)</div>
 			<p>Score sauvegardé.</p>
 		</div>
 		<div class="ui error message">
-			<p>Erreur lors de l'envoi du score.</p>
+			<div class="header">Erreur :(</div>
+			<p id="errorSend">Une erreur est survenue</p>
 		</div>
 		<button class="ui button" type="submit">Envoyer</button>
 	</form>
@@ -96,13 +100,15 @@ $(document).ready(function() {
 	<form id="sendRetrieve" class="ui form">
 		<div class="six wide required field">
 			<label>Identifiant</label>
-			<input type="text" name="id_user" placeholder="Identifiant utilisateur" required value="panzoli">
+			<input type="text" name="id_user" placeholder="Identifiant utilisateur" required value="Cyr13ll32903">
 		</div>
 		<div class="ui success message">
+			<div class="header">Succès :)</div>
 			<p>Le score associé à l'utilisateur <b id="userRetrieved"></b> est <b id="scoreRetrieved"></b>.</p>
 		</div>
 		<div class="ui error message">
-			<p>Erreur lors de la récupération du score.</p>
+			<div class="header">Erreur :(</div>
+			<p id="errorRetrieve">Une erreur est survenue</p>
 		</div>
 		<button class="ui button" type="submit">Récupérer</button>
 	</form>
