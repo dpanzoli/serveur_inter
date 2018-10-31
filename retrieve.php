@@ -1,32 +1,33 @@
 <?php
 
-	$databaseHost = 'localhost';
-	$databasePort = '3306';
-	$databaseName = 'dpanzoli';
-	$login = 'dpanzoli';
-	$password = 'rCkJbwHxjavCRHGE001N';
-	
-	if (!isset($_GET['user']) {
-		die('Error for ???');
-	}
+	require_once 'config.php';
 	
 	try {
 		$pdoOptions[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;            
 		$pdo = new PDO('mysql:host=' . $databaseHost . ';port=' . $databasePort . ';dbname=' . $databaseName, $login, $password, $pdoOptions);
 		$pdo->exec('SET NAMES UTF8');
-		$query = "select * from Inter_scores limit 1";
+		$query = "select * from Inter_scores where id_user='".$_GET['id_user']."' limit 1";
 		$result = $pdo->query($query);
 		unset($pdo);
         if ($result) {
             $result = $result->fetchAll(PDO::FETCH_ASSOC);
             if ($result) {
-                echo(json_encode($result[0]));
+                echo json_encode( array(
+					'code'=>0,
+					'data'=>$result[0]
+				));
             } else {
-				echo('La table est vide');
+				echo json_encode( array(
+					'code'=>-1,
+					'data'=>$_GET['id_user'].' n\'existe pas dans la base.'
+				));
 			}
         }
 	} catch (Exception $e) {
-		die('Error for PDO: ' . $e->getMessage());
+		echo json_encode( array(
+			'code'=>-1,
+			'data'=>$e->getMessage()
+		));
 	}
 
 ?>

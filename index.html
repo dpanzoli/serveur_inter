@@ -15,12 +15,46 @@ $(document).ready(function() {
 			type: 'GET',
 			url: 'send.php',
 			data: $(this).serialize(),
-			dataType: 'text',
-			success: function(data) {
-				console.log(data);
+			dataType: 'json',
+			success: function(result) {
+				if (result.code == 0) {
+					$('#sendForm .success').show();
+					$('#sendForm .error').hide();
+				} else {
+					$('#sendForm .success').hide();
+					$('#sendForm .error').show();
+				}
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				$('#sendForm .success').hide();
+				$('#sendForm .error').show();
+			}
+		});
+	});
+	
+	
+	$("#sendRetrieve").submit(function(e) {
+		e.preventDefault();
+		$.ajax({
+			type: 'GET',
+			url: 'retrieve.php',
+			data: $(this).serialize(),
+			dataType: 'json',
+			success: function(result) {
+				if (result.code == 0) {
+					$('#userRetrieved').text(result.data.id_user);
+					$('#scoreRetrieved').text(result.data.score);
+					$('#sendRetrieve .success').show();
+					$('#sendRetrieve .error').hide();
+				} else {
+					$('#sendRetrieve .success').hide();
+					$('#sendRetrieve .error').show();
+				}
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
 				console.log(errorThrown);
+				$('#sendRetrieve .success').hide();
+				$('#sendRetrieve .error').show();
 			}
 		});
 	});
@@ -31,7 +65,7 @@ $(document).ready(function() {
 <style>
 	.ui.container {
 		padding: 10px;
-		width: 400px;
+		width: 500px;
 	}
 </style>
 <body>
@@ -39,11 +73,11 @@ $(document).ready(function() {
 <div class="ui container">
 	<h1>Envoi sur le serveur</h1>
 	<form id="sendForm" class="ui form">
-		<div class="required field">
+		<div class="six wide required field">
 			<label>Identifiant</label>
-			<input type="text" name="user" placeholder="Identifiant utilisateur" required value="panzoli">
+			<input type="text" name="id_user" placeholder="Identifiant utilisateur" required value="panzoli">
 		</div>
-		<div class="required field">
+		<div class="six wide required field">
 			<label>Score</label>
 			<input type="text" name="score" placeholder="Score" required value="1">
 		</div>
@@ -54,6 +88,23 @@ $(document).ready(function() {
 			<p>Erreur lors de l'envoi du score.</p>
 		</div>
 		<button class="ui button" type="submit">Envoyer</button>
+	</form>
+</div>
+
+<div class="ui container">
+	<h1>Récupération à partir du serveur</h1>
+	<form id="sendRetrieve" class="ui form">
+		<div class="six wide required field">
+			<label>Identifiant</label>
+			<input type="text" name="id_user" placeholder="Identifiant utilisateur" required value="panzoli">
+		</div>
+		<div class="ui success message">
+			<p>Le score associé à l'utilisateur <b id="userRetrieved"></b> est <b id="scoreRetrieved"></b>.</p>
+		</div>
+		<div class="ui error message">
+			<p>Erreur lors de la récupération du score.</p>
+		</div>
+		<button class="ui button" type="submit">Récupérer</button>
 	</form>
 </div>
 
