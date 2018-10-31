@@ -18,6 +18,7 @@ $(document).ready(function() {
 			dataType: 'json',
 			success: function(result) {
 				if (result.code == 0) {
+					$('#successSend').text(result.data);
 					$('#sendForm .success').show();
 					$('#sendForm .error').hide();
 				} else {
@@ -44,7 +45,8 @@ $(document).ready(function() {
 			success: function(result) {
 				if (result.code == 0) {
 					$('#userRetrieved').text(result.data.id_user);
-					$('#scoreRetrieved').text(result.data.score);
+					$('#varRetrieved').text(result.data.variable);
+					$('#valRetrieved').text(result.data.valeur);
 					$('#sendRetrieve .success').show();
 					$('#sendRetrieve .error').hide();
 				} else {
@@ -85,12 +87,16 @@ $(document).ready(function() {
 				<input type="text" name="id_user" placeholder="Identifiant utilisateur" required value="Cyr13ll32903">
 			</div>
 			<div class="six wide required field">
-				<label>Score</label>
-				<input type="text" name="score" placeholder="Score" required value="100">
+				<label>Variable</label>
+				<input type="text" name="var" placeholder="Nom de la variable" required value="jauge_efficacité">
+			</div>
+			<div class="six wide required field">
+				<label>Valeur</label>
+				<input type="text" name="val" placeholder="Valeur" required value="100">
 			</div>
 			<div class="ui success message">
 				<div class="header">Succès :)</div>
-				<p>Score sauvegardé.</p>
+				<p id="successSend"></p>
 			</div>
 			<div class="ui error message">
 				<div class="header">Erreur :(</div>
@@ -106,9 +112,13 @@ $(document).ready(function() {
 				<label>Identifiant</label>
 				<input type="text" name="id_user" placeholder="Identifiant utilisateur" required value="Cyr13ll32903">
 			</div>
+			<div class="six wide required field">
+				<label>Variable</label>
+				<input type="text" name="var" placeholder="Nom de la variable" required value="jauge_efficacité">
+			</div>
 			<div class="ui success message">
 				<div class="header">Succès :)</div>
-				<p>Le score associé à l'utilisateur <b id="userRetrieved"></b> est <b id="scoreRetrieved"></b>.</p>
+				<p>La valeur de la variable <b id="varRetrieved"></b> associé à l'utilisateur <b id="userRetrieved"></b> est <b id="valRetrieved"></b>.</p>
 			</div>
 			<div class="ui error message">
 				<div class="header">Erreur :(</div>
