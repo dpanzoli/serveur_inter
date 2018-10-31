@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8"></meta>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.js"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+<script language="javascript">
+
+$(document).ready(function() {
+	
+	$("#sendForm").submit(function(e) {
+		e.preventDefault();
+		$.ajax({
+			type: 'GET',
+			url: 'send.php',
+			data: $(this).serialize(),
+			dataType: 'text',
+			success: function(data) {
+				console.log(data);
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				console.log(errorThrown);
+			}
+		});
+	});
+
+});
+
+</script>
+<style>
+	.ui.container {
+		padding: 10px;
+		width: 400px;
+	}
+</style>
+<body>
+
+<div class="ui container">
+	<h1>Envoi sur le serveur</h1>
+	<form id="sendForm" class="ui form">
+		<div class="required field">
+			<label>Identifiant</label>
+			<input type="text" name="user" placeholder="Identifiant utilisateur" required value="panzoli">
+		</div>
+		<div class="required field">
+			<label>Score</label>
+			<input type="text" name="score" placeholder="Score" required value="1">
+		</div>
+		<div class="ui success message">
+			<p>Score sauvegardé.</p>
+		</div>
+		<div class="ui error message">
+			<p>Erreur lors de l'envoi du score.</p>
+		</div>
+		<button class="ui button" type="submit">Envoyer</button>
+	</form>
+</div>
+
+
+</body>
+</html>
